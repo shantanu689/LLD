@@ -8,8 +8,9 @@ public class ElevatorController {
     private List<ElevatorCar> elevators;
     private HashMap<Integer, FloorPanel> floorPanels;
     private IExternalAssignmentStrategy externalAssignmentStrategy;
+    private static ElevatorController controller = null;
 
-    public ElevatorController(int elevatorCount, int floors, IExternalAssignmentStrategy externalAssignmentStrategy)
+    private ElevatorController(int elevatorCount, int floors, IExternalAssignmentStrategy externalAssignmentStrategy)
     {
         this.elevators = new ArrayList<>();
         this.floorPanels = new HashMap<>();
@@ -27,6 +28,15 @@ public class ElevatorController {
         {
             floorPanels.put(i, new FloorPanel(i, this));
         }
+    }
+
+    public static synchronized ElevatorController GetInstance(int elevatorCount, int floors, IExternalAssignmentStrategy externalAssignmentStrategy)
+    {
+        if(controller == null)
+        {
+            controller = new ElevatorController(elevatorCount, floors, externalAssignmentStrategy);
+        }
+        return controller;
     }
 
     int HandleRequest(int inFloor, int outFloor)
