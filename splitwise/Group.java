@@ -24,13 +24,13 @@ public class Group {
         this.payments = new ArrayList<>();
     }
 
-    public void addExpense(Expense expense)
+    public synchronized void addExpense(Expense expense)
     {
         expenses.add(expense);      
         simplifyTransactions(expense);
     }
 
-    public void recordPayment(Payment payment)
+    public synchronized void recordPayment(Payment payment)
     {
         payments.add(payment);
         Double senderBalance = userToBalanceMap.get(payment.from);
@@ -45,7 +45,7 @@ public class Group {
         return transactions;
     }
 
-    public void addUser(User user)
+    public synchronized void addUser(User user)
     {
         members.add(user);
         userToBalanceMap.put(user.name, 0.0);

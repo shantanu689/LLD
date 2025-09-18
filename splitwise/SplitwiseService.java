@@ -1,16 +1,16 @@
 package splitwise;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SplitwiseService {
     private static SplitwiseService instance = null;
-    private HashMap<String, Group> groups = new HashMap<>();
-    private HashMap<String, User> users = new HashMap<>();
+    private ConcurrentHashMap<String, Group> groups = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
 
     private SplitwiseService() {}
 
-    public static synchronized SplitwiseService getInstance()
+    public synchronized static SplitwiseService getInstance()
     {
         if(instance == null)
         {
@@ -41,7 +41,7 @@ public class SplitwiseService {
         return groups.get(groupName).getPendingTransactions();
     }
 
-    public void recordPayment(String groupName, Payment payment)
+    public synchronized void recordPayment(String groupName, Payment payment)
     {
         groups.get(groupName).recordPayment(payment);
     }
