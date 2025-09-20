@@ -1,4 +1,4 @@
-package splitwise;
+package splitwiseWithBuilder;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
